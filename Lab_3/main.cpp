@@ -1,10 +1,12 @@
-#include "Lab_3.h"
+#include "MainWindow.h"
 #include <QtWidgets/QApplication>
+#include <QLinef>
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	Lab_3 w;
+	MainWindow w;
+	
 	w.show();
 	return a.exec();
 }
