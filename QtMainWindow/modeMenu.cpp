@@ -9,6 +9,13 @@ modeMenu::modeMenu(): QGroupBox()
 	pCnvxShell = new QPushButton("Convex Shell");
 	pCircle = new QPushButton("Circles");
 
+	pDlnTr->setCheckable(true);
+	pVrnDiagr->setCheckable(true);
+	pCnvxShell->setCheckable(true);
+	pCircle->setCheckable(true);
+
+	pDlnTr->setChecked(true);
+
 	QHBoxLayout *pLOut = new QHBoxLayout();
 
 	pLOut->setMargin(15);
