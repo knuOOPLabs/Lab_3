@@ -4,7 +4,7 @@
 MainWindow::MainWindow()
 {
 	pPaintArea = new paintArea();
-	pPaintArea->setStyleSheet("background-color: BROWN;");
+	pPaintArea->setStyleSheet("background-color:white;");
 	pModeMenu = new modeMenu();
 	pAddPointsMenu = new addPointsMenu();
 

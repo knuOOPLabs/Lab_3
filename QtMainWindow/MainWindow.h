@@ -3,6 +3,7 @@
 #include <QtWidgets/QWidget>
 #include <QMainWindow>
 #include <QList>
+#include <QVector>
 
 #include "modeMenu.h"
 #include "paintArea.h"

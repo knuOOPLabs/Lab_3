@@ -1,16 +1,11 @@
-#include "paintArea.h"
+﻿#include "paintArea.h"
 #include <QBoxLayout>
+#include <QPainter>
 
 paintArea::paintArea(QWidget * parent)
 	: QWidget(parent)
 {
-	setMinimumSize(50, 50);
 
-	//setStyleSheet("background-color:white;");
-
-	//QVBoxLayout *playout = new QVBoxLayout();
-	//playout->addWidget(this);
-	//setLayout(playout);
 }
 
 paintArea::~paintArea()
@@ -25,4 +20,33 @@ QSize paintArea::minimumSizeHint() const
 QSize paintArea::sizeHint() const
 {
 	return QSize(100, 100);
+}
+
+void paintArea::paintEvent(QPaintEvent *event)
+{
+	QPainter painter(this);
+
+	painter.setRenderHint(QPainter::Antialiasing, true);
+	painter.setBrush(QBrush(Qt::white));
+	painter.setPen(QPen(Qt::white));
+	painter.drawRect(event->rect());
+
+
+	painter.setBrush(QBrush(Qt::black));
+	painter.setPen(QPen(Qt::black));
+	for (int i = 0; i < points.size(); ++i)
+	{
+		painter.drawPoint(points[i]);
+	}
+}
+
+void paintArea::resizeEvent(QResizeEvent *event)
+{
+
+}
+
+void paintArea::mousePressEvent(QMouseEvent* event )
+{
+	points.push_back(QPointF(event->pos()));
+	update();
 }
