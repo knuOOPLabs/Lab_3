@@ -17,14 +17,18 @@ MainWindow::MainWindow()
 	pmainLOut->setMargin(10);
 	pmainLOut->addLayout(pupper);
 	pmainLOut->addWidget(pModeMenu);
-
-	//QGridLayout *pLOut = new QGridLayout();
-	//pLOut->setMargin(20);
-	//pLOut->addWidget(pAddPointsMenu, 0, 0, 4, 1);
-	//pLOut->addWidget(pPaintArea, 0, 1, 4, 5);
-	//pLOut->addWidget(pModeMenu, 4, 0, 1, 6);
 	
 	setLayout(pmainLOut);
+
+	connect(pModeMenu->getButtDel(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintDel(bool)));
+	connect(pModeMenu->getButtVor(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintVor(bool)));
+	connect(pModeMenu->getButtShell(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintShell(bool)));
+	connect(pModeMenu->getButtCircl(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintCircl(bool)));
+
+	//connect(pModeMenu->getButtDel(), SIGNAL(toggled(false)), pPaintArea, SLOT(setPaintDel(false)));
+	//connect(pModeMenu->getButtVor(), SIGNAL(toggled(false)), pPaintArea, SLOT(setPaintVor(false)));
+	//connect(pModeMenu->getButtShell(), SIGNAL(toggled(false)), pPaintArea, SLOT(setPaintShell(false)));
+	//connect(pModeMenu->getButtCircl(), SIGNAL(toggled(false)), pPaintArea, SLOT(setPaintCircl(false)));
 }
 
 

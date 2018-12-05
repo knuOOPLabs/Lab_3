@@ -21,25 +21,33 @@ public:
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
 
+
+public slots:
+	void setPaintDel(bool);
+	void setPaintVor(bool);
+	void setPaintShell(bool);
+	void setPaintCircl(bool);
+
+	//setPaintDel(true)));
+	//setPaintVor(true)));
+	//setPaintShell(true)));
+	//setPaintCirlc(true)));
 private:
 
-	QGraphicsScene * scene;
-	QTimer * timer;
+	bool _paintDel
+		, _paintVor
+		, _paintShell
+		, _paintCircl;
 
 	QVector<QPointF> points;
 
-	//paintEvent()
+	void paintDel();
+	void paintVor();
+	void paintShell();
+	void paintCircl();
 
 protected:
 
 	void paintEvent(QPaintEvent *event) override;
-	void resizeEvent(QResizeEvent *event);
-
-	QGraphicsItemGroup * group;
-
-
-
-	virtual void mousePressEvent(QMouseEvent* ре);
-	//virtual void mouseReleaseEvent(QMouseEvent* ре);
-	//virtual void mouseMoveEvent(QMouseEvent* ре);
+	void mousePressEvent(QMouseEvent* ре) override;
 };

@@ -12,8 +12,10 @@ public:
 	modeMenu();
 	~modeMenu();
 
-	
-
+	const QPushButton * getButtDel() const;
+	const QPushButton * getButtVor() const;
+	const QPushButton * getButtShell() const;
+	const QPushButton * getButtCircl() const;
 
 private:
 
@@ -22,5 +24,5 @@ private:
 	QPushButton * pCnvxShell;
 	QPushButton * pCircle;
 
-	void propsToButt(QPushButton * butt);	
+	//void propsToButt(QPushButton * butt);	
 };

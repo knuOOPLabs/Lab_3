@@ -4,6 +4,10 @@
 
 paintArea::paintArea(QWidget * parent)
 	: QWidget(parent)
+	, _paintDel(true)
+	, _paintVor(false)
+	, _paintShell(false)
+	, _paintCircl(false)
 {
 
 }
@@ -22,6 +26,46 @@ QSize paintArea::sizeHint() const
 	return QSize(100, 100);
 }
 
+void paintArea::setPaintDel(bool res)
+{
+	_paintDel = res;
+}
+
+void paintArea::setPaintVor(bool res)
+{
+	_paintVor = res;
+}
+
+void paintArea::setPaintShell(bool res)
+{
+	_paintShell = res;
+}
+
+void paintArea::setPaintCircl(bool res)
+{
+	_paintCircl = res;
+}
+
+void paintArea::paintDel()
+{
+
+}
+
+void paintArea::paintVor()
+{
+
+}
+
+void paintArea::paintShell()
+{
+
+}
+
+void paintArea::paintCircl()
+{
+
+}
+
 void paintArea::paintEvent(QPaintEvent *event)
 {
 	QPainter painter(this);
@@ -38,11 +82,11 @@ void paintArea::paintEvent(QPaintEvent *event)
 	{
 		painter.drawPoint(points[i]);
 	}
-}
 
-void paintArea::resizeEvent(QResizeEvent *event)
-{
-
+	if (_paintDel) paintDel();
+	if (_paintVor) paintVor();
+	if (_paintShell) paintShell();
+	if (_paintCircl) paintCircl();
 }
 
 void paintArea::mousePressEvent(QMouseEvent* event )
