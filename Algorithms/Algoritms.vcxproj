@@ -96,13 +96,14 @@
   <ItemGroup>
     <ClCompile Include="DelanauTriangulate.cpp" />
     <ClCompile Include="Edge.cpp" />
-    <ClCompile Include="myQPoint.cpp" />
+    <ClCompile Include="Grehem.cpp" />
+    <ClCompile Include="qgeometry.cpp" />
     <ClCompile Include="QTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DelanauTriangulate.h" />
     <ClInclude Include="Edge.h" />
-    <ClInclude Include="myQPoint.h" />
+    <ClInclude Include="Grehem.h" />
     <ClInclude Include="qgeometry.h" />
     <ClInclude Include="QTriangle.h" />
   </ItemGroup>

@@ -1,6 +1,19 @@
 ﻿#include "paintArea.h"
 #include <QBoxLayout>
 #include <QPainter>
+#include <random>
+#include <ctime>
+
+paintArea::paintArea(QVector<QPointF *> & points, QVector<QTriangle *> & triangles, QWidget * parent)
+	: QWidget(parent)
+	, _paintDel(true)
+	, _paintVor(false)
+	, _paintShell(false)
+	, _paintCircl(false)
+{
+	_points = &points;
+	_triangles = &triangles;
+}
 
 paintArea::paintArea(QWidget * parent)
 	: QWidget(parent)
@@ -29,44 +42,29 @@ QSize paintArea::sizeHint() const
 void paintArea::setPaintDel(bool res)
 {
 	_paintDel = res;
+	update();
 }
 
 void paintArea::setPaintVor(bool res)
 {
 	_paintVor = res;
+	update();
 }
 
 void paintArea::setPaintShell(bool res)
 {
 	_paintShell = res;
+	update();
 }
 
 void paintArea::setPaintCircl(bool res)
 {
 	_paintCircl = res;
+	update();
 }
 
-void paintArea::paintDel()
-{
 
-}
-
-void paintArea::paintVor()
-{
-
-}
-
-void paintArea::paintShell()
-{
-
-}
-
-void paintArea::paintCircl()
-{
-
-}
-
-void paintArea::paintEvent(QPaintEvent *event)
+void paintArea::paintRect(QPaintEvent *event)
 {
 	QPainter painter(this);
 
@@ -74,23 +72,68 @@ void paintArea::paintEvent(QPaintEvent *event)
 	painter.setBrush(QBrush(Qt::white));
 	painter.setPen(QPen(Qt::white));
 	painter.drawRect(event->rect());
+}
 
+void paintArea::paintPoints(QPaintEvent *event)
+{
+	QPainter painter(this);
 
-	painter.setBrush(QBrush(Qt::black));
-	painter.setPen(QPen(Qt::black));
-	for (int i = 0; i < points.size(); ++i)
+	QPen pen;
+	pen.setWidth(3);
+	pen.setColor(Qt::black);
+	painter.setPen(pen);
+
+	for (int i = 0; i < _points->size(); ++i)
 	{
-		painter.drawPoint(points[i]);
+		//QPointF p = ;
+		painter.drawPoint(*(*_points)[i]);
 	}
+}
 
-	if (_paintDel) paintDel();
-	if (_paintVor) paintVor();
-	if (_paintShell) paintShell();
-	if (_paintCircl) paintCircl();
+void paintArea::paintDel(QPaintEvent *event)
+{
+	QPainter painter(this);
+
+	QPen pen;
+	pen.setWidth(1);
+	pen.setColor(Qt::black);
+	painter.setPen(pen);
+
+	for (int i = 0; i < _triangles->size(); ++i)
+	{
+		painter.drawPolygon((*_triangles)[i]->polygon());
+	}
+}
+
+void paintArea::paintVor(QPaintEvent *event)
+{
+
+}
+
+void paintArea::paintShell(QPaintEvent *event)
+{
+
+}
+
+void paintArea::paintCircl(QPaintEvent *event)
+{
+
+}
+
+void paintArea::paintEvent(QPaintEvent *event)
+{	
+	paintRect(event);
+	paintPoints(event);
+	if (_paintDel) paintDel(event);
+	if (_paintVor) paintVor(event);
+	if (_paintShell) paintShell(event);
+	if (_paintCircl) paintCircl(event);
 }
 
 void paintArea::mousePressEvent(QMouseEvent* event )
 {
-	points.push_back(QPointF(event->pos()));
-	update();
+	QPointF * newPoint = new QPointF(event->pos());
+	_points->push_back(newPoint);
+	emit addPoint();
+	//update();
 }

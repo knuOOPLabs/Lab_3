@@ -12,6 +12,12 @@ public:
 	optRandPoints();
 	~optRandPoints();
 
+	const QTextEdit * pointsNum() const;
+	const QPushButton * genButt() const;
+
+public slots:
+	void getPoints(QVector<QPointF> &);
+
 private:
 
 	QTextEdit * pPointsNum;

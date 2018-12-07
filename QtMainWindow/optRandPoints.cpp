@@ -17,8 +17,24 @@ optRandPoints::optRandPoints()
 	pLOut->addWidget(pGenButt);
 
 	setLayout(pLOut);
+
 }
 
 optRandPoints::~optRandPoints()
 {
+}
+
+const QTextEdit * optRandPoints::pointsNum() const
+{
+	return pPointsNum;
+}
+
+const QPushButton * optRandPoints::genButt() const
+{
+	return pGenButt;
+}
+
+void optRandPoints::getPoints(QVector<QPointF> & vect)
+{
+	//unsigned int numOfPoints = QTextEdit::paste();
 }

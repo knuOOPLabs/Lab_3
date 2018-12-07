@@ -15,6 +15,10 @@ public:
 	addPointsMenu();
 	~addPointsMenu();
 
+	const optRandPoints * randButt() const;
+	const optDownPoints * downButt() const;
+	const optCoordPoints * coordButt() const;
+
 private:
 
 	optRandPoints * prand;

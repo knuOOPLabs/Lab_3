@@ -3,8 +3,7 @@
 #include <QBoxLayout>
 MainWindow::MainWindow()
 {
-	pPaintArea = new paintArea();
-	pPaintArea->setStyleSheet("background-color:white;");
+	pPaintArea = new paintArea(_points, _triangles);
 	pModeMenu = new modeMenu();
 	pAddPointsMenu = new addPointsMenu();
 
@@ -20,17 +19,51 @@ MainWindow::MainWindow()
 	
 	setLayout(pmainLOut);
 
+	// setup modeMenu
 	connect(pModeMenu->getButtDel(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintDel(bool)));
 	connect(pModeMenu->getButtVor(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintVor(bool)));
 	connect(pModeMenu->getButtShell(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintShell(bool)));
 	connect(pModeMenu->getButtCircl(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintCircl(bool)));
 
-	//connect(pModeMenu->getButtDel(), SIGNAL(toggled(false)), pPaintArea, SLOT(setPaintDel(false)));
-	//connect(pModeMenu->getButtVor(), SIGNAL(toggled(false)), pPaintArea, SLOT(setPaintVor(false)));
-	//connect(pModeMenu->getButtShell(), SIGNAL(toggled(false)), pPaintArea, SLOT(setPaintShell(false)));
-	//connect(pModeMenu->getButtCircl(), SIGNAL(toggled(false)), pPaintArea, SLOT(setPaintCircl(false)));
+	//setup random points
+	connect(pAddPointsMenu->randButt()->genButt(), SIGNAL(clicked()), pPaintArea, SLOT(genPoints()));
+
+	// build new diagrams my adding new point by mouse clicking
+	connect(pPaintArea, SIGNAL(addPoint()), this, SLOT(build()));
+
 }
 
+void MainWindow::rebuild()
+{
+	build();
+}
 
+void MainWindow::build()
+{
+	buildDelanau();
+	buildVorony();
+	buildShell();
 
+	pPaintArea->update();
+}
+
+void MainWindow::buildDelanau()
+{
+	_triangles.clear();
+
+	CDelanauTriangulate del;
+	del.downPoints(_points);
+
+	_triangles = del.triangulate();
+}
+
+void MainWindow::buildVorony()
+{
+
+}
+
+void MainWindow::buildShell()
+{
+
+}
 

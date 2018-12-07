@@ -8,7 +8,7 @@
 #include "modeMenu.h"
 #include "paintArea.h"
 #include "addPointsMenu.h"
-
+#include "DelanauTriangulate.h"
 
 class MainWindow : public QWidget
 {
@@ -17,9 +17,19 @@ class MainWindow : public QWidget
 public:
 	MainWindow();
 
+public slots:
+	void rebuild();
+	void build();
+
 private:
-	
 	paintArea * pPaintArea;
 	modeMenu * pModeMenu;
 	addPointsMenu * pAddPointsMenu;
+
+	QVector<QPointF *> _points;
+	QVector<QTriangle *> _triangles;
+
+	void buildDelanau();
+	void buildVorony();
+	void buildShell();
 };

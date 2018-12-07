@@ -17,14 +17,14 @@ public:
 
 	void setCoords(const double &x, const double &y);
 
-	double dist2(const myQPoint &v) const;
-	double dist(const myQPoint &v) const;
-	double norm2() const;
+	double dist2(const myQPoint &v) const;	//	reworked as a friend function	+
+	double dist(const myQPoint &v) const;	//	reworked as a friend function	+
+	double norm2() const;					//	reworked as a friend function	+
 
 	bool operator == (const myQPoint& other) const;
 
 	//friend double dist(const myQPoint & p1, const myQPoint & p2);
-	friend bool almost_equal(const myQPoint& p1, const myQPoint& p2, int ulp = 2 );
+	friend bool almost_equal(const myQPoint& p1, const myQPoint& p2, int ulp = 2 );	//	reworked as a friend function	+
 
 private:
 	double _x, _y;

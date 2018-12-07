@@ -4,10 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27703.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lab_3", "Lab_3\Lab_3.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F11A40A8-5DB4-4F8D-8FD6-64AD2190CF8C} = {F11A40A8-5DB4-4F8D-8FD6-64AD2190CF8C}
+		{D5E3ACFA-DE87-449A-97D2-E83AEDDE3045} = {D5E3ACFA-DE87-449A-97D2-E83AEDDE3045}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QtMainWindow", "QtMainWindow\QtMainWindow.vcxproj", "{D5E3ACFA-DE87-449A-97D2-E83AEDDE3045}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F11A40A8-5DB4-4F8D-8FD6-64AD2190CF8C} = {F11A40A8-5DB4-4F8D-8FD6-64AD2190CF8C}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Algoritms", "Algoritms\Algoritms.vcxproj", "{F11A40A8-5DB4-4F8D-8FD6-64AD2190CF8C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Algorithms", "Algorithms\Algoritms.vcxproj", "{F11A40A8-5DB4-4F8D-8FD6-64AD2190CF8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
