@@ -136,6 +136,7 @@ void paintArea::paintEvent(QPaintEvent *event)
 	if (_paintVor) paintVor(event);
 	if (_paintShell) paintShell(event);
 	if (_paintCircl) paintCircl(event);
+	update();
 }
 
 void paintArea::mousePressEvent(QMouseEvent* event )
@@ -143,5 +144,4 @@ void paintArea::mousePressEvent(QMouseEvent* event )
 	QPointF * newPoint = new QPointF(event->pos());
 	_points->push_back(newPoint);
 	emit addPoint();
-	//update();
 }

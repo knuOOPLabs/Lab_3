@@ -8,21 +8,14 @@
 class CDelanauTriangulate
 {
 public:
-	CDelanauTriangulate();
-	CDelanauTriangulate(const QVector<const QPointF *> & pointers);
+	CDelanauTriangulate(const QVector<const QPointF *> * pointers, QVector<QTriangle *> * triangles);
 	~CDelanauTriangulate();
-
-	void downPoints(const QVector<const QPointF *> & pointers);
-
-	QVector<QTriangle *> triangles() const;
-	QVector<QEdge *> edges() const;
-
-	QVector<QTriangle *> triangulate();
+	
+	void triangulate();
 
 private:
 
-	QVector<const QPointF *> _pointers;
-	QVector<QEdge *> _edges;
-	QVector<QTriangle *> _triangles;
+	const QVector<const QPointF *> *_pointers;
+	QVector<QTriangle *> *_triangles;
 };
 

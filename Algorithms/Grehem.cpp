@@ -1,8 +1,12 @@
 #include "Grehem.h"
 #include "qgeometry.h"
 #include <cmath>
+#include <thread>
+#include <chrono>
 
-Grehem::Grehem(const QVector<const QPointF *> * pointers) : _pointers(pointers) 
+Grehem::Grehem(const QVector<const QPointF *> * pointers, QPolygonF * cnvxShell) 
+	: _pointers(pointers)
+	, _cnvxShell(cnvxShell)
 {
 	coeffsTable = new int[_pointers->size()];
 	for (size_t i = 0; i < _pointers->size(); ++i)
@@ -27,28 +31,6 @@ const QPointF * Grehem::findLowest() const
 	swapcoeffs(j, 0);
 
 	return res;
-}
-
-bool Grehem::cmpQPointF(const QPointF * p1, const QPointF * p2) const
-{
-	return rotate(*pstartPoint, *p1, *p2) < 0;
-
-	//if (p1->x() > pstartPoint->x())
-	//{
-	//	if (p2->x() > pstartPoint->x()) return sin(*pstartPoint, *p1) > sin(*pstartPoint, *p2);
-	//	else return false;
-	//}
-	//else
-	//{
-	//	if (p2->x() > pstartPoint->x()) return true;
-	//	else return sin(*pstartPoint, *p1) < sin(*pstartPoint, *p2);;
-	//}
-}
-
-bool Grehem::checkNextPoint()
-{
-	// check for all vector if p2  in our result vector
-	return true;
 }
 
 int Grehem::pointPartition(int * coeffs, const int & lower, const int & higher)
@@ -88,35 +70,26 @@ void Grehem::swapcoeffs(const int & first, const int & second) const
 	coeffsTable[second] = tmp;
 }
 
-QPolygonF Grehem::GrehemMethod()
+void Grehem::GrehemMethod()
 {
-	QPolygonF cnvxShell;
+	pstartPoint = findLowest();
+	pointQuickSort(coeffsTable, 1, _pointers->size() - 1);
 
-	if (_pointers->size() > 2)
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	*_cnvxShell << *(*_pointers)[coeffsTable[0]] << *(*_pointers)[coeffsTable[1]];
+
+	for (size_t i = 2; i < _pointers->size(); ++i)
 	{
-		pstartPoint = findLowest();
-
-		pointQuickSort(coeffsTable, 1, _pointers->size() - 1);
-
-		//QVector<QPointF> res;
-		cnvxShell << *(*_pointers)[coeffsTable[0]] << *(*_pointers)[coeffsTable[1]];
-
-		//res.push_back(*(*_pointers)[coeffsTable[0]]);
-		//res.push_back(*(*_pointers)[coeffsTable[1]]);
-
-
-		for (size_t i = 2; i < _pointers->size(); ++i)
+		
+		int j = _cnvxShell->size();
+		while(j > 1 && rotate((*_cnvxShell)[j - 2], (*_cnvxShell)[j - 1], *(*_pointers)[coeffsTable[i]]) > 0)
 		{
-			int j = cnvxShell.size();
-			while(j > 1 && rotate(cnvxShell[j - 2], cnvxShell[j - 1], *(*_pointers)[coeffsTable[i]]) > 0)
-			{
-				cnvxShell.pop_back();
-				j--;
-			}
-
-			cnvxShell.push_back((*(*_pointers)[coeffsTable[i]]));
+			std::this_thread::sleep_for(std::chrono::milliseconds(200));
+			_cnvxShell->pop_back();
+			j--;
 		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+		_cnvxShell->push_back((*(*_pointers)[coeffsTable[i]]));
 	}
-	return cnvxShell;
 }
 

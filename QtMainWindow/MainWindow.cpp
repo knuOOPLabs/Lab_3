@@ -1,6 +1,10 @@
 #include "MainWindow.h"
 
 #include <QBoxLayout>
+#include <thread>
+#include <chrono>
+#include <random>
+#include <ctime>
 
 #include "DelanauTriangulate.h"
 #include "Grehem.h"
@@ -30,7 +34,7 @@ MainWindow::MainWindow()
 	connect(pModeMenu->getButtCircl(), SIGNAL(toggled(bool)), pPaintArea, SLOT(setPaintCircl(bool)));
 
 	//setup random points
-	connect(pAddPointsMenu->randButt()->genButt(), SIGNAL(clicked()), pPaintArea, SLOT(genPoints()));
+	connect(pAddPointsMenu->randButt()->genButt(), SIGNAL(clicked()), this, SLOT(genPoints()));
 
 	// build new diagrams my adding new point by mouse clicking
 	connect(pPaintArea, SIGNAL(addPoint()), this, SLOT(build()));
@@ -51,14 +55,33 @@ void MainWindow::build()
 	pPaintArea->update();
 }
 
+void MainWindow::genPoints()
+{
+	int pointsNum = pAddPointsMenu->randButt()->pointsNum()->toPlainText().toInt();
+
+	srand(time(NULL));
+
+	_points.clear();
+
+	for (int i = 0; i < pointsNum; ++i)
+	{
+		QPointF * pnewPoint = new QPointF(50 + rand() % (pPaintArea->size().width() - 50), 50 + rand() % (pPaintArea->size().height() - 50));
+		_points.push_back(pnewPoint);
+	}
+	build();
+}
+
 void MainWindow::buildDelanau()
 {
-	_triangles.clear();
+	if (_points.size() > 2)
+	{
+		
+		_triangles.clear();
+		CDelanauTriangulate del(&_points, &_triangles);
 
-	CDelanauTriangulate del;
-	del.downPoints(_points);
-
-	_triangles = del.triangulate();
+		std::thread th(&CDelanauTriangulate::triangulate, del);
+		th.detach();
+	}
 }
 
 void MainWindow::buildVorony()
@@ -68,9 +91,12 @@ void MainWindow::buildVorony()
 
 void MainWindow::buildShell()
 {
-	_cnvxShell.clear();
-	Grehem greh(&_points);
-
-	_cnvxShell = greh.GrehemMethod();
+	if (_points.size() > 2)
+	{
+		_cnvxShell.clear();
+		Grehem greh(&_points, &_cnvxShell);
+		std::thread th(&Grehem::GrehemMethod, greh);
+		th.detach();
+	}
 }
 

@@ -8,22 +8,16 @@
 class Grehem
 {
 public:
-	Grehem(const QVector<const QPointF *> * pointers);
-	QPolygonF GrehemMethod();
+	Grehem(const QVector<const QPointF *> * pointers, QPolygonF * cnvxShell);
+	void GrehemMethod();
 
 private:
 	const QVector<const QPointF *> * _pointers;
+	
 	const QPointF *pstartPoint;
 	int * coeffsTable;
-
-
-	bool cmpQPointF(const QPointF * p2, const QPointF * p3) const;	//	true if p2 > p3
-
+	QPolygonF * _cnvxShell;
 	const QPointF * findLowest() const;
-
-	void findNextPoint();
-
-	bool checkNextPoint();
 
 	int pointPartition(int * coeffs, const int & lower, const int & higher);
 

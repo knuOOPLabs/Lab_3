@@ -1,20 +1,5 @@
 #include "Edge.h"
 
-//myQPoint QEdge::p1() const
-//{
-//	return _p1;
-//}
-//
-//myQPoint QEdge::p2() const
-//{
-//	return _p2;
-//}
-//
-//void QEdge::setPoints(const myQPoint &p1, const myQPoint &p2)
-//{
-//	_p1 = p1;
-//	_p2 = p2;
-//}
 
 bool QEdge::isBad() const
 {

@@ -19,6 +19,8 @@ public:
 public slots:
 	void rebuild();
 	void build();
+	void genPoints();
+
 
 private:
 	paintArea * pPaintArea;
