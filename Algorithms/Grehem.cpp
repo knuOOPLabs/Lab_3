@@ -2,21 +2,28 @@
 #include "qgeometry.h"
 #include <cmath>
 
-Grehem::Grehem(const QVector<const QPointF *> * pointers) : _pointers(pointers) {}
+Grehem::Grehem(const QVector<const QPointF *> * pointers) : _pointers(pointers) 
+{
+	coeffsTable = new int[_pointers->size()];
+	for (size_t i = 0; i < _pointers->size(); ++i)
+	{
+		coeffsTable[i] = i;
+	}
+}
 
 
 const QPointF * Grehem::findLowest() const
 {
 	const QPointF * res = (*_pointers)[0];
-	size_t j = 0;
-	for (size_t i = 1; i < _pointers->size(); i++)
+	int i = 1;
+	for (; i < _pointers->size(); i++)
 	{
 		if (res->y() < (*_pointers)[i]->y())
 		{
 			res = (*_pointers)[i];
-			j = i;
 		}
 	}
+	swapcoeffs(i, 0);
 
 	return res;
 }
@@ -52,18 +59,13 @@ int & Grehem::pointPartition(int * coeffs, const int & lower, const int & higher
 		{
 			if (i != j)
 			{
-				//	swap
-				tmp = coeffs[i];
-				coeffs[i] = coeffs[j];
-				coeffs[j] = tmp;
+				swapcoeffs(i, j);
 			}
 			++i;
 		}
 	}
 	//swap
-	tmp = coeffs[i];
-	coeffs[i] = coeffs[higher];
-	coeffs[higher] = tmp;
+	swapcoeffs(i, higher);
 
 	return i;
 }
@@ -77,13 +79,18 @@ void Grehem::pointQuickSort(int * coeffs, const int & lower, const int & higher)
 	pointQuickSort(coeffs, partition + 1, higher);
 }
 
+void Grehem::swapcoeffs(const int & first, const int & second) const
+{
+	int tmp = coeffsTable[first];
+	coeffsTable[first] = coeffsTable[second];
+	coeffsTable[second] = tmp;
+}
+
 QPolygonF Grehem::GrehemMethod()
 {
 	pstartPoint = findLowest();
 
-	int * coefficients = new int[_pointers->size()];
-	
-	pointQuickSort(coefficients, 0, _pointers->size());
+	pointQuickSort(coeffsTable, 1, _pointers->size());
 
 	//qsort(&_pointers, _pointers.size(), sizeof(QPointF), compareQPointF);
 

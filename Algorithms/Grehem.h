@@ -14,6 +14,7 @@ public:
 private:
 	const QVector<const QPointF *> * _pointers;
 	const QPointF *pstartPoint;
+	int * coeffsTable;
 
 
 	bool cmpQPointF(const QPointF * p2, const QPointF * p3) const;	//	true if p2 > p3
@@ -28,6 +29,6 @@ private:
 
 	void pointQuickSort(int * coeffs, const int & lower, const int & higher);
 
-	
+	void swapcoeffs(const int & first, const int & second) const;
 };
 
