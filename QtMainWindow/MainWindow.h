@@ -3,11 +3,11 @@
 #include <QtWidgets/QWidget>
 #include <QMainWindow>
 #include <QList>
+#include <QVector>
 
 #include "modeMenu.h"
 #include "paintArea.h"
 #include "addPointsMenu.h"
-
 
 class MainWindow : public QWidget
 {
@@ -16,9 +16,22 @@ class MainWindow : public QWidget
 public:
 	MainWindow();
 
+public slots:
+	void rebuild();
+	void build();
+	void genPoints();
+
+
 private:
-	
 	paintArea * pPaintArea;
 	modeMenu * pModeMenu;
 	addPointsMenu * pAddPointsMenu;
+
+	QVector<const QPointF *> _points;
+	QVector<QTriangle *> _triangles;
+	QPolygonF _cnvxShell;
+
+	void buildDelanau();
+	void buildVorony();
+	void buildShell();
 };

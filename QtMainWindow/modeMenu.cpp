@@ -32,7 +32,27 @@ modeMenu::~modeMenu()
 {
 }
 
-void modeMenu::propsToButt(QPushButton * butt)
+const QPushButton * modeMenu::getButtDel() const
 {
-
+	return pDlnTr;
 }
+
+const QPushButton * modeMenu::getButtVor() const
+{
+	return pVrnDiagr;
+}
+
+const QPushButton * modeMenu::getButtShell() const
+{
+	return pCnvxShell;
+}
+
+const QPushButton * modeMenu::getButtCircl() const
+{
+	return pCircle;
+}
+
+//void modeMenu::propsToButt(QPushButton * butt)
+//{
+//
+//}

@@ -32,10 +32,13 @@
     <ClCompile Include="Edge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="myQPoint.cpp">
+    <ClCompile Include="QTriangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QTriangle.cpp">
+    <ClCompile Include="qgeometry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Grehem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,13 +49,13 @@
     <ClInclude Include="Edge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="myQPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="qgeometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grehem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

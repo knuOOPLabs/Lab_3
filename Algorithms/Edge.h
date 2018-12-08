@@ -3,28 +3,19 @@
 #include "myQPoint.h"
 //#include "qgeometry.h"
 
-class QEdge
+class QEdge : public QLineF
 {
 public:
-	//using VertexType = Vector2<T>;
-	QEdge() : _p1(0, 0), _p2(0, 0) {}
-	QEdge(const myQPoint &p1, const myQPoint &p2) : _p1(p1), _p2(p2), _isBad(false) {};
-	QEdge(const QEdge &e) : _p1(e.p1()), _p2(e.p2()), _isBad(false) {};
 
-	myQPoint p1() const;
-	myQPoint p2() const;
+	bool isBad() const;					//	will be realized as vector of bad QLineF
+	void makeBad(const bool res);		//	will be realized as vector of bad QLineF
 
-	void setPoints(const myQPoint &p1, const myQPoint &p2);
-
-	bool isBad() const;
-	void makeBad(const bool res);
-
-	friend bool almost_equal(const QEdge & e1, const QEdge & e2);
+	friend bool almost_equal(const QEdge & e1, const QEdge & e2);	//	REWORKED as friend
 
 private:
 
-	myQPoint _p1;
-	myQPoint _p2;
+	//myQPoint _p1;
+	//myQPoint _p2;
 
 	bool _isBad;
 };

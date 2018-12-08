@@ -13,6 +13,9 @@ public:
 	optCoordPoints();
 	~optCoordPoints();
 
+public slots:
+
+
 private:
 
 	QPushButton * pAdd;

@@ -23,3 +23,18 @@ addPointsMenu::addPointsMenu()
 addPointsMenu::~addPointsMenu()
 {
 }
+
+const optRandPoints * addPointsMenu::randButt() const
+{
+	return prand;
+}
+
+const optDownPoints * addPointsMenu::downButt() const
+{
+	return pdown;
+}
+
+const optCoordPoints * addPointsMenu::coordButt() const
+{
+	return pcoord;
+}
