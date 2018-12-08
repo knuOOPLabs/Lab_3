@@ -7,38 +7,27 @@
 
 class Grehem
 {
+public:
+	Grehem(const QVector<const QPointF *> * pointers);
+	QPolygonF GrehemMethod();
+
 private:
+	const QVector<const QPointF *> * _pointers;
+	const QPointF *pstartPoint;
 
-	//int pointAngleType();
 
-	//function: searching left point
-	// parametres: vector with points
-	QPointF findLowest(const QVector<QPointF *> * _pointers);
+	bool cmpQPointF(const QPointF * p2, const QPointF * p3) const;	//	true if p2 > p3
 
-	bool cmp(const QPointF & a, const QPointF & b);
+	const QPointF * findLowest() const;
 
-	bool cw(const QPointF & a, const QPointF & b, const QPointF & c);
-
-	bool ccw(const QPointF & a, const QPointF & b, const QPointF & c);
-
-	//function: searching left point
-	// parametres: vector with points
 	void findNextPoint();
 
 	bool checkNextPoint();
 
-	int pointPartition(QVector<QPointF *> * _pointers, const QPointF & leadPoint, const int & lower, const int & higher);
+	int & pointPartition(int * coeffs, const int & lower, const int & higher);
 
-	void pointQuickSort(QVector<QPointF *> * _pointers, const QPointF & leadPoint, const int & lower, const int & higher);
-
-	QPointF _p1, _p2, _p3;
-
-public:
+	void pointQuickSort(int * coeffs, const int & lower, const int & higher);
 
 	
-
-	// doing Grehem method
-	// input points in vector
-	QPolygonF GrehemMethod(QVector<QPointF *> _pointers);
 };
 

@@ -1,70 +1,38 @@
 #include "Grehem.h"
-#include <QLineF>
+#include "qgeometry.h"
 #include <cmath>
 
-int compareQPointF(const void * p1, const void * p2);
+Grehem::Grehem(const QVector<const QPointF *> * pointers) : _pointers(pointers) {}
 
-//int Grehem::pointAngleType() 
-//{
-//	int fi = (p2.y - p1.y) * (p3.x - p2.x) -
-//		(p2.x - p1.x) * (p3.y - p2.y);
-//	if (fi == 0) return 0;     
-//	return (fi > 0) ? 2 : 1;      
-//}
 
-QPointF Grehem::findLowest(const QVector<QPointF *> * _pointers)
+const QPointF * Grehem::findLowest() const
 {
-	QPointF res = *(*_pointers)[0];
+	const QPointF * res = (*_pointers)[0];
 	size_t j = 0;
 	for (size_t i = 1; i < _pointers->size(); i++)
 	{
-		if (res.y() < (*_pointers)[i]->y())
+		if (res->y() < (*_pointers)[i]->y())
 		{
-			res = *(*_pointers)[i];
+			res = (*_pointers)[i];
 			j = i;
 		}
 	}
 
-	//_pointers.remove(j);
-	//_pointers.push_front(&res);
-
 	return res;
 }
 
-int compareQPointF(const void * p2, const void * p3)
+bool Grehem::cmpQPointF(const QPointF * p1, const QPointF * p2) const
 {
-	//QLineF l1(_p1, )
-	//QLineF l2(_p1, b);
-	//
-	//if (l1.angle() < l2.angle()) return 1;
-	//else if (l1.angle() > l2.angle()) return -1;
-	//else
-	//{
-	//	if (abs(a.x() - _p1.x()) < abs(b.x() - _p1.x())) return 1;
-	//	else if (abs(a.x() - _p1.x()) > abs(b.x() - _p1.x())) return-1;
-	//}
-	//
-	//return 0;
-}
-
-bool Grehem::cmp(const QPointF & p1, const QPointF & p2)
-{
-	return p1.x() < p2.x() || p1.x() == p2.x() && p1.y() > p2.y();
-}
-
-bool Grehem::cw(const QPointF & p1, const QPointF & p2, const QPointF & p3)
-{
-	return p1.x()*(p2.y() - p3.y()) + p2.x()*(p3.y() - p1.y()) + p3.x()*(p1.y() - p2.y()) < 0;
-}
-
-bool Grehem::ccw(const QPointF & p1, const QPointF & p2, const QPointF & p3)
-{
-	return p1.x()*(p2.y() - p3.y()) + p2.x()*(p3.y() - p1.y()) + p3.x()*(p1.y() - p2.y()) > 0;
-}
-
-void Grehem::findNextPoint()
-{
-	// probegaemsya po cukly i nahodim point s naimenhim fi p3 = that.point
+	if (p1->x() > pstartPoint->x())
+	{
+		if (p2->x() > pstartPoint->x()) return sin(*pstartPoint, *p1) > sin(*pstartPoint, *p2);
+		else return false;
+	}
+	else
+	{
+		if (p2->x() > pstartPoint->x()) return true;
+		else return sin(*pstartPoint, *p1) < sin(*pstartPoint, *p2);;
+	}
 }
 
 bool Grehem::checkNextPoint()
@@ -73,49 +41,79 @@ bool Grehem::checkNextPoint()
 	return true;
 }
 
-int Grehem::pointPartition(QVector<QPointF *> * _pointers, const QPointF & leadPoint, const int & lower, const int & higher)
+int & Grehem::pointPartition(int * coeffs, const int & lower, const int & higher)
 {
-
-}
-
-void Grehem::pointQuickSort(QVector<QPointF *> * _pointers, const QPointF & leadPoint, const int & lower, const int & higher)
-{
-
-}
-
-QPolygonF Grehem::GrehemMethod(QVector<QPointF *> _pointers)
-{
-	_p1 = findLowest(&_pointers);	// find first pointer
-	
-
-	//qsort(&_pointers, _pointers.size(), sizeof(QPointF), compareQPointF);
-	// проверяем по циклу
+	const QPointF * p1 = (*_pointers)[higher];
+	int i = lower
+		, tmp = 0;
+	for (int j = lower; lower < higher; ++j)
 	{
-		//step 2
-		findNextPoint();
-		// now we have p3
-
-		// step 3 checking p3
-
-		if (pointAngleType() == 1)
+		if (cmpQPointF((*_pointers)[j], p1))
 		{
-			// input p1  in result vector
-			p1 = p2;
-			p2 = p3;
-		}
-		else if (pointAngleType() == 0)
-		{
-			p2 = p3;
-		}
-		else if (pointAngleType() == 2)
-		{
-			p2 = p3;
-		}
-		else
-		{
-			throw " Can't find fi for three points";
+			if (i != j)
+			{
+				//	swap
+				tmp = coeffs[i];
+				coeffs[i] = coeffs[j];
+				coeffs[j] = tmp;
+			}
+			++i;
 		}
 	}
+	//swap
+	tmp = coeffs[i];
+	coeffs[i] = coeffs[higher];
+	coeffs[higher] = tmp;
+
+	return i;
+}
+
+void Grehem::pointQuickSort(int * coeffs, const int & lower, const int & higher)
+{
+	if (lower >= higher) return;
+
+	int partition = pointPartition(coeffs, lower, higher);
+	pointQuickSort(coeffs, lower, partition - 1);
+	pointQuickSort(coeffs, partition + 1, higher);
+}
+
+QPolygonF Grehem::GrehemMethod()
+{
+	pstartPoint = findLowest();
+
+	int * coefficients = new int[_pointers->size()];
+	
+	pointQuickSort(coefficients, 0, _pointers->size());
+
+	//qsort(&_pointers, _pointers.size(), sizeof(QPointF), compareQPointF);
+
+	//{
+	//	//step 2
+	//	findNextPoint();
+	//	// now we have p3
+	//
+	//	// step 3 checking p3
+	//
+	//	//if (pointAngleType() == 1)
+	//	//{
+	//	//	// input p1  in result vector
+	//	//	//p1 = p2;
+	//	//	//p2 = p3;
+	//	//}
+	//	//else if (pointAngleType() == 0)
+	//	//{
+	//	//	//p2 = p3;
+	//	//}
+	//	//else if (pointAngleType() == 2)
+	//	//{
+	//	//	//p2 = p3;
+	//	//}
+	//	//else
+	//	//{
+	//	//	throw " Can't find fi for three points";
+	//	//}
+	//}
+
 	// input p2 in result vector
 }
 

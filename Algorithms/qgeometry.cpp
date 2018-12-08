@@ -10,6 +10,11 @@ double dist(const QPointF &p1, const QPointF &p2)
 	return sqrt(dist2(p1, p2));
 }
 
+float sin(const QPointF &p1, const QPointF &p2)
+{
+	return dist(p1, p2) / abs(p2.y() - p1.y());
+}
+
 double norm2(const QPointF &p1)
 {
 	return p1.x() * p1.x() + p1.y() * p1.y();
