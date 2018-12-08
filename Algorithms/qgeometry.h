@@ -21,6 +21,8 @@ double dist(const QPointF &p1, const QPointF &p2);	//	from myQPiont
 
 float sin(const QPointF &p1, const QPointF &p2);	//	sin of p2 of triangle (p1, p2, p3) where p3 is a projection of point p2 to x-axic that has point p1
 
+float rotate(const QPointF &p1, const QPointF &p2, const QPointF &p3); //
+
 double norm2(const QPointF &p1);					//	from myQPiont
 
 bool almost_equal(const QPointF& p1, const QPointF& p2, int ulp = 2);	//	reworked as a friend function from myQPiont

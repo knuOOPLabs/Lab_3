@@ -18,7 +18,7 @@ class paintArea : public QWidget
 
 public:
 	paintArea(QWidget * parent = 0);
-	paintArea(QVector<QPointF *> &, QVector<QTriangle *> &, QWidget * parent = 0);
+	paintArea(QVector<const QPointF *> &, QVector<QTriangle *> &, QPolygonF &, QWidget * parent = 0);
 	~paintArea();
 	
 	QSize minimumSizeHint() const override;
@@ -43,8 +43,9 @@ private:
 		, _paintShell
 		, _paintCircl;
 
-	QVector<QPointF *> * _points;
+	QVector<const QPointF *> * _points;
 	QVector<QTriangle *> * _triangles;
+	QPolygonF * _cnvxShell;
 
 	void paintRect(QPaintEvent *event);
 	void paintPoints(QPaintEvent *event);

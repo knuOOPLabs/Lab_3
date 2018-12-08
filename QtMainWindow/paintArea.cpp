@@ -4,7 +4,7 @@
 #include <random>
 #include <ctime>
 
-paintArea::paintArea(QVector<QPointF *> & points, QVector<QTriangle *> & triangles, QWidget * parent)
+paintArea::paintArea(QVector<const QPointF *> & points, QVector<QTriangle *> & triangles, QPolygonF & cnvxShell, QWidget * parent)
 	: QWidget(parent)
 	, _paintDel(true)
 	, _paintVor(false)
@@ -13,6 +13,7 @@ paintArea::paintArea(QVector<QPointF *> & points, QVector<QTriangle *> & triangl
 {
 	_points = &points;
 	_triangles = &triangles;
+	_cnvxShell = &cnvxShell;
 }
 
 paintArea::paintArea(QWidget * parent)
@@ -112,7 +113,14 @@ void paintArea::paintVor(QPaintEvent *event)
 
 void paintArea::paintShell(QPaintEvent *event)
 {
+	QPainter painter(this);
 
+	QPen pen;
+	pen.setWidth(2);
+	pen.setColor(Qt::red);
+	painter.setPen(pen);
+
+	painter.drawPolygon(*_cnvxShell);
 }
 
 void paintArea::paintCircl(QPaintEvent *event)

@@ -1,9 +1,13 @@
 #include "MainWindow.h"
 
 #include <QBoxLayout>
+
+#include "DelanauTriangulate.h"
+#include "Grehem.h"
+
 MainWindow::MainWindow()
 {
-	pPaintArea = new paintArea(_points, _triangles);
+	pPaintArea = new paintArea(_points, _triangles, _cnvxShell);
 	pModeMenu = new modeMenu();
 	pAddPointsMenu = new addPointsMenu();
 
@@ -64,6 +68,9 @@ void MainWindow::buildVorony()
 
 void MainWindow::buildShell()
 {
+	_cnvxShell.clear();
+	Grehem greh(&_points);
 
+	_cnvxShell = greh.GrehemMethod();
 }
 

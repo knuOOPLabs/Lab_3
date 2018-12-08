@@ -5,7 +5,7 @@
 CDelanauTriangulate::CDelanauTriangulate() {}
 
 
-CDelanauTriangulate::CDelanauTriangulate(const QVector<QPointF *> & pointers)
+CDelanauTriangulate::CDelanauTriangulate(const QVector<const QPointF *> & pointers)
 	:_pointers(_pointers)
 {}
 
@@ -13,7 +13,7 @@ CDelanauTriangulate::~CDelanauTriangulate()
 {
 }
 
-void CDelanauTriangulate::downPoints(const QVector<QPointF *> & pointers)
+void CDelanauTriangulate::downPoints(const QVector<const  QPointF *> & pointers)
 {
 	_pointers.clear();
 	_pointers = pointers;
@@ -25,11 +25,6 @@ QVector<QTriangle *> CDelanauTriangulate::triangles() const
 	return _triangles;
 }
 
-QVector<QPointF *> CDelanauTriangulate::pointers() const
-{
-	return _pointers;
-}
-
 QVector<QEdge *> CDelanauTriangulate::edges() const
 {
 	return _edges;
@@ -37,7 +32,7 @@ QVector<QEdge *> CDelanauTriangulate::edges() const
 
 QVector<QTriangle *> CDelanauTriangulate::triangulate()
 {
-	QVector<QTriangle *> _triangles;
+	//QVector<QTriangle *> _triangles;
 	_edges.clear();
 	if (_pointers.size() >= 3)
 	{

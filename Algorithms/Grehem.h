@@ -25,7 +25,7 @@ private:
 
 	bool checkNextPoint();
 
-	int & pointPartition(int * coeffs, const int & lower, const int & higher);
+	int pointPartition(int * coeffs, const int & lower, const int & higher);
 
 	void pointQuickSort(int * coeffs, const int & lower, const int & higher);
 
